@@ -1,0 +1,201 @@
+ 
+\documentclass{article}
+
+\title{Algorithm Homework 1}
+\author{Peter Rong \\ Student ID: 69850764 \\ rongyy@shanghaitech.edu.cn}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[colorlinks,linkcolor=red]{hyperref}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{subfloat}
+\newtheorem{prop}{Proposition}
+\usepackage{ulem}
+\usepackage{indentfirst}
+\usepackage{listings}
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+	\subsection*{(a)}
+		$$ a = 9, b = 3, log_b a = 2$$
+		We are in Case 2 of Master Theorem
+		Thus $T(n) = \Theta(n^2lgn)$
+	\subsection*{(b)}
+		$$ a = 5, b = 3, log_b a > 1$$
+		We are in Case 1 of Master Theorem
+		Thus $T(n) = \Theta(n^{log_3 5})$
+	\subsection*{(c)}
+		Set $$ n = 2^m $$
+		$$ T(2^m) = 7T(2^{m/8}) + m^2 $$
+		$$ a = 7, b = 8, log_b a < 1 < 2 $$
+		We are in Case 2, $T(n) = 8m^2 = 8(log n)^2 = \Theta((log n)^2)$
+	\subsection*{(d)}
+		Using Tree method, we can tell that $T(n) = 4f(n)$.\\
+		Thus $T(n) = \Theta(n)$\\
+		(Or $T(n) = (\sum_i^{lgn})(\frac{1}{2}+\frac{1}{4})^i)f(n) = 4f(n)(1-(\frac{3}{4})^{lgn})$)
+	\subsection*{(e)}
+		\subsubsection*{(1)}
+			Since $log n = o(n^c)$, we can conclude that:
+			$$ log log n , log(n) , \sqrt{n}$$
+			Now we compare:
+			$$ \lim_{n \to \infty}\frac{(log n)^2}{\sqrt{n}}
+				= \lim_{n \to \infty}\frac{2\frac{1}{n}log n}{\frac{1}{2}n^{\frac{-1}{2}}}
+				= \lim_{n \to \infty}\frac{4logn}{\sqrt{n}} = 0
+			$$
+			Thus we have:
+			$$ log log n , log(n), (log n)^2, \sqrt{n}$$
+		\subsubsection*{(2)}
+			$$ log n! , n logn , n^\frac{4}{3}, n^2 $$
+		\subsubsection*{(3)}
+			$$ 2^{log n^{log log n}} , e^n , n! , n^n$$
+
+
+
+\section*{Problem 2}
+	\subsection*{Algorithm 1}
+		$$ T(n) = \sum_{k = 3}^n{\sqrt{k}} = \Theta(n\sqrt{n})$$
+	\subsection*{Algorithm 2}
+		Denote $ G = (Vex, Edg) $.
+		Denote $ V = |Vex|, E = |Edg|$.
+		\par Since this is a BFS over a graph:
+		$$ T(n) = \Theta(V+E) $$
+
+\section*{Problem 3}
+	\subsection*{Algorithm 3}
+		Denote $T(n) = f_n$ to make our life easier.
+		Then we can see that:
+		$$ f_n = f_{n-1} + 2f(n-2)$$
+		Denote $A_n = 
+			\begin{bmatrix} f_n \\ f_{n-1}\end{bmatrix}$
+		Then we have:
+		$$ A_n 
+			= \begin{bmatrix} 1 & 2 \\ 1 & 0 \end{bmatrix} * A_{n-1}
+			= \begin{bmatrix} f_{n-1} + 2f_{n-2} \\ f_{n-1} \end{bmatrix}
+			= \begin{bmatrix} 1 & 2 \\ 1 & 0 \end{bmatrix}^{n-2} * A_2
+			= \begin{bmatrix} 1 & 2 \\ 1 & 0 \end{bmatrix}^{n-2} * \begin{bmatrix} 1 \\ 1 \end{bmatrix}
+		$$
+		Denote $D = \begin{bmatrix} 1 & 2 \\ 1 & 0 \end{bmatrix}$, who has eigenvectors and eigenvalues listed:
+		$$ \lambda_1 = 2, \lambda_2 = -1 $$
+		$$ v_1 = \begin{bmatrix} 2 \\ 1\end{bmatrix},
+			v_2 = \begin{bmatrix} 1 \\ -1\end{bmatrix}
+		$$
+		Denote $ Q = \begin{bmatrix} v_1 & v_2 \end{bmatrix} $
+		Then we have:
+		$$ D = Q \begin{bmatrix} 2 & 0 \\ 0 & -1 \end{bmatrix} Q^{-1}$$
+		In the end, $$A_n 
+			= Q
+				* \begin{bmatrix} 2 & 0 \\ 0 & -1 \end{bmatrix}^{n-2}
+				* Q^{-1}
+				* \begin{bmatrix} 1 \\ 1 \end{bmatrix}$$
+		Thus, $T(n) = f_n = \Theta(2^n) $
+	\subsection*{Algorithm 4}
+		$$T(n) = T(n/3) + 2T(2n/3) + n$$
+		Using tree method, we can tell
+		$$T(n) = n + (n/3+2*2n/3)lg n = \Theta(n lg n)$$
+
+\section*{Problem 4}
+	\subsection*{(a)}
+		When $ n = 1$
+			$$ \sum_{i=1}^n\frac{1}{i^2} = 1 < 2$$
+		When $n = k \geqslant 1 $, let's assume it's still true.\\
+		Then we have the following relation:
+			$$ \sum_{i=1}^k\frac{1}{i^2} 
+			= 1 + \sum_{i=2}^k\frac{1}{i^2} 
+			< 1 + \sum_{i=2}^k\frac{1}{i(i-1)} 
+			= 2 - \frac{1}{k}
+			$$
+		When $n = k+1$
+		$$ \sum_{i=1}^{k+1}\frac{1}{i^2} 
+			< 2 - \frac{1}{k} + \frac{1}{(k+1)^2}
+			= 2 - \frac{(k+1)^2 - k}{k(k+1)^2}
+			= 2 - \frac{k^2 + k + 1}{k(k+1)^2}
+			< 2
+		$$
+		So this relation is still true.
+		\par In conclusion, $\forall n > 1$, $\sum_{i=1}^n\frac{1}{i^2} < 2$
+
+
+	\subsection*{(b)}
+		When $ n = 3 $
+			$$ n^{n+1} = 81 > 64 = (n+1)^n$$
+		When $ n = k \geqslant 3 $, let's assume the relation $ k^{k+1} > (k+1) ^ n$ holds. That is
+		$$ \frac{Left}{Right}
+			= \frac{k^{k+1}}{(k+1)^k}
+			> 1
+		$$
+		When $ n = k + 1 $ we need to proof:
+		\begin{equation} \label{Target1} 
+		\frac{Left}{Right} 
+				= \frac{(k+1)^{k+2}}{(k+2)^{k+1}}
+				> 1
+		\end{equation}
+		An easier approach would be proving:
+		\begin{equation} \label{Target2}
+		\frac{(k+1)^{k+2}}{(k+2)^{k+1}} 
+			> \frac{k^{k+1}}{(k+1)^k}
+			> 1
+		\end{equation}
+		That is:
+		$$ \frac{\frac{(k+1)^{k+2}}{(k+2)^{k+1}}}{\frac{k^{k+1}}{(k+1)^k}}
+			= \frac{((k+1)^2)^{k+1}}{k^{k+1}(k+1)^{k+1}}
+			= (\frac{k^2+2k+1}{k^2+k})^{(k+1)}
+			> 1
+		$$
+		This relation proved that \ref{Target2} is true, which leads to \ref{Target1} being true.
+		\par In conclusion, $\forall n > 3$, such relation is true.
+
+\section*{Problem 5}
+	\subsection*{(a)}
+		\par According to basic inequation:
+		\begin{equation}  \label{Eq2}
+		x_n 
+			= \frac{1}{2}(\frac{\alpha}{x_n} + x_n) 
+			\geqslant \frac{1}{2}*2\sqrt{\frac{\alpha}{x_n} * x_n}
+			= \sqrt{\alpha}
+		\end{equation}
+		\begin{equation} \label{Eq1}
+		x_{n+1} - x_n 
+			= \frac{1}{2}(\frac{\alpha}{x_n} - x_n) 
+			< \frac{1}{2}(\frac{\alpha}{\sqrt{\alpha}} - \sqrt{\alpha})
+			= 0
+		\end{equation}
+		which means: $ x_{n+1} - x_n < 0$, $x_n$ decreses.
+		Now that relations \ref{Eq1} and \ref{Eq2} are both true, it is suffice to say that:
+		$$ \lim_{n \to \infty} x_n = \sqrt{\alpha}$$
+	\subsection*{(b)}
+		\begin{equation} \begin{aligned}
+			\epsilon_{n+1}
+				= x_{n+1} - \sqrt{\alpha}
+				= \frac{1}{2}(x_n + \frac{\alpha}{x_n} - 2\sqrt{\alpha}) \\
+				= \frac{x_n^2 - 2\sqrt{\alpha}x_n+\alpha}{2x_n} 
+				= \frac{(x_n - \sqrt{\alpha})^2}{2x_n} \\
+				= \frac{\epsilon_n^2}{2x_n}
+				< \frac{\epsilon_n^2}{2\sqrt{\alpha}}
+		\end{aligned} \end{equation}
+		Now that we denote $\beta = 2\sqrt{\alpha}$
+		$$ \epsilon_{n+1} 
+			< \frac{\epsilon_n^2}{2\sqrt{\alpha}}
+			= \frac{1}{\beta}*\epsilon_n^2
+			= \frac{1}{\beta}*\frac{\epsilon_1^{2^n}}{\beta^{2^n-2}}
+			= \beta(\frac{\epsilon_1}{\beta})^{2^n}
+		$$
+	\subsection*{(c)}
+		$$\frac{\epsilon_n}{\beta} 
+			= \frac{x_n-\sqrt{\alpha}}{2\sqrt{\alpha}}
+			< \frac{x_1-\sqrt{\alpha}}{2\sqrt{\alpha}}
+			= \frac{2-\sqrt{3}}{2\sqrt{3}}
+			= 0.07735 < \frac{1}{10}
+		$$ 
+		Then:
+		$$\epsilon_5 
+			< \beta(\frac{\epsilon_1}{\beta})^{2^4} 
+			< (2\sqrt{3})^{-15} * 10^{-16}
+		$$
+		$$\epsilon_6 
+			< \beta(\frac{\epsilon_1}{\beta})^{2^5}
+			< (2\sqrt{3})^{-31} * 10^{-32}
+		$$
+
+\end{document}
+\grid
