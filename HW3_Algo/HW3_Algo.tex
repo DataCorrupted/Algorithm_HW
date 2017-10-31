@@ -45,9 +45,36 @@
 \maketitle
 
 \section*{Problem 3-1}
+\begin{lstlisting}[language = C++]
+const int 
+  NumOfBags
+  (int* arr, int n, int w, 
+   double left, double right) {
+  // right / left stands for quantile.
+  // By default right = 1, left = 0.
+  mid = (right + left) / 2
+  int quant_mid = Select(arr, n * mid);
+  int quant_right = Select(arr, n * right)
+  int large_half = 0;
+  int num_of_bags = 0;
+  for (int i=0; i<n, i++){
+    if ((quant_mid <= arr[i]) && (arr[i] <= quant_right)) {
+      large_half += arr[i];
+      num_of_bags ++;
+    }
+  }
+  if (w < large_half) {
+    return NumOfBags(arr, n, w, mid, right)
+  } else if (w > large_half) {
+    return NumOfBags(arr, n, w - large_half, left, mid) + num_of_bags;
+  } else {
+    return num_of_bags;
+  }
+}
+\end{lstlisting}  
 \section*{Problem 3-2}
-    \subsection*{(a)}
-    By using recursion instead of \textit{find\_min} and \textit{find\_next} can lower the time complexity. In this way, each and every node is only visited once.
+  \subsection*{(a)}
+  By using recursion instead of \textit{find\_min} and \textit{find\_next} can lower the time complexity. In this way, each and every node is only visited once.
 \begin{lstlisting}[language = C++]
 <template T> T*
   InOrderTraverseBST
@@ -60,7 +87,7 @@
 }
 \end{lstlisting}   
 
-    \subsection*{(b)}
+  \subsection*{(b)}
 \begin{lstlisting}[language = C++]
 const bool
   SatisfyBST 
@@ -86,7 +113,27 @@ def SatisfyBST (node):
   return (left_sat and right_sat and (abs(left_dep-right_dep) < 2), node.depth)
 
 \end{lstlisting}   
-    \subsection*{(c)}
+  
+  \subsection*{(c)}
+
+
+
 \section*{Problem 3-3}
+  \subsection*{(a)}
+    If $H$ is strongly 2-universal, $\forall x_1 \neq x_2 \in U$, the distribution of $(h(x_1), h(x_2))$ is uniform distribution over plane $\mathbb{Z}^2$, thus
+    $$ Pr(h(x_1) = h(x_2)) = \sum Pr((y, y)) = m / m^2 = \frac{1}{m}$$
+  \subsection*{(b)}
+    $$ U = \mathbb{Z}$$
+    $$h_1(x) = x \mod 3$$
+    $$h_2(x) = (x+1) \mod 3$$
+    $$H = \{h_1, h_2\}$$
+    The probability for collision is $\frac{1}{m}$, but there will only be m pairs[3 pairs: (1, 2), (2, 0), (0, 1)] instead of $m^2$ pairs. Thus it can't be a strongly 2-universal.
+  \subsection*{(c)}
+    $$ U = \mathbb{Z}$$
+    $$h_i(x) = (x+i) \mod m$$
+    $$H = \{h_i | i \in [m]\}$$
+    In this way, $\forall j \in [m]$, when given  $\forall x$, we can know $h_j(x)$, choose $y = x + m \neq x$, $h_j(y) = h_j(x)$, $Pr(h_j(y) = h_j(x)) = 1$
+
+  \subsection*{(d)}
 
 \end{document}
