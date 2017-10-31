@@ -1,3 +1,4 @@
 
 *.pdf
 !IntroductionToAlgorithms.pdf
+!ps*.pdf

@@ -66,16 +66,6 @@ echo "
 
 \end{document}" > "HW$1_Algo.tex"
 
-echo "
-*.pdf
-" > .gitignore
-
-git init
-git add compile.sh
-git add "HW$1_Algo.tex"
-git add .gitignore
-git add Pic/
-git commit -m "Initial commit: rep constructed successfully."
 
 echo "Testing compile command..."
 ./compile.sh
