@@ -58,6 +58,7 @@ const int
   int large_half = 0;
   int num_of_bags = 0;
   for (int i=0; i<n, i++){
+    // Only bags in the 'right' part(mid to right) will be considered.
     if ((quant_mid <= arr[i]) && (arr[i] <= quant_right)) {
       large_half += arr[i];
       num_of_bags ++;
@@ -72,6 +73,7 @@ const int
   }
 }
 \end{lstlisting}  
+Time Complexity: $T(n) = n + T(\frac{n}{2}) = O(n)$
 \section*{Problem 3-2}
   \subsection*{(a)}
   By using recursion instead of \textit{find\_min} and \textit{find\_next} can lower the time complexity. In this way, each and every node is only visited once.
@@ -79,6 +81,7 @@ const int
 <template T> T*
   InOrderTraverseBST
   (const Node<T>* node, T* arr){
+// Each and every node will only be visited once so it's O(n)
   if (node == nullptr) { return arr; }
   arr[0] = node->key;
   T* end = InOrderTraverseBST(node->left, arr+1);
@@ -127,6 +130,19 @@ def SatisfyBST (node):
     $$h_1(x) = x \mod 3$$
     $$h_2(x) = (x+1) \mod 3$$
     $$H = \{h_1, h_2\}$$
+    \begin{table}[!hbp]
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+      \hline
+      $x$ & 1 & 2 & 3 & 4 & 5 & 6 \\ 
+      \hline
+      $h_1(x)$ & 1 & 2 & 0 & 1 & 2 & 0 \\
+      \hline
+      $h_2(x)$ & 2 & 0 & 1 & 2 & 0 & 1 \\
+      \hline
+      $h_1$, $h_2$ pair & (1,2) & (2,0) & (0,1) & (1,2) & (2,0) & (0,1) \\
+      \hline
+    \end{tabular}
+    \end{table}
     The probability for collision is $\frac{1}{m}$, but there will only be m pairs[3 pairs: (1, 2), (2, 0), (0, 1)] instead of $m^2$ pairs. Thus it can't be a strongly 2-universal.
   \subsection*{(c)}
     $$ U = \mathbb{Z}$$
@@ -135,5 +151,7 @@ def SatisfyBST (node):
     In this way, $\forall j \in [m]$, when given  $\forall x$, we can know $h_j(x)$, choose $y = x + m \neq x$, $h_j(y) = h_j(x)$, $Pr(h_j(y) = h_j(x)) = 1$
 
   \subsection*{(d)}
-
+    Solve this by Bayes' Rule:
+    $$Pr(h(y) = h(x) | h(x)) = \frac{Pr(h(x), h(y))}{Pr(h(x))} = \frac{\frac{1}{m^2}}{\frac{1}{m}} = \frac{1}{m}$$
+    That is to say, for any $y$, the probability of collision is always $\frac{1}{m}$
 \end{document}
