@@ -64,10 +64,13 @@ const int
     }
   }
   if (w < large_half) {
+    // The large half can solve the problem.
     return NumOfBags(arr, n, w, mid, right)
   } else if (w > large_half) {
+    // The largest half isn't enough, shrink the problem
     return NumOfBags(arr, n, w - large_half, left, mid) + num_of_bags;
   } else {
+    // It happen to be enough, cool.
     return num_of_bags;
   }
 }
