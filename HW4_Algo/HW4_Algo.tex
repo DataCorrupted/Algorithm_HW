@@ -45,6 +45,40 @@
 \maketitle
 
 \section*{Problem 1}
+\begin{lstlisting}[language = C++]
+double median(double* arr, int len){
+  if (len % 1 ==1)  {
+    return arr[len/2 - 1];
+  } else {
+    return (arr[len/2 -1] + arr[len/2]) / 2;
+  }
+}
+// Keep finding median of both array and compare them.
+double 
+  FindMid(
+    double* arr1, int len1,
+    double* arr2, int len2
+  ) {
+  if ((len1 == 1) && (len2 == 1)){
+    return (arr1[0] + arr2[0])/2;
+  }
+  double mid1 = median(arr1, len1);
+  double mid2 = median(arr2, len2);
+  if (mid1 == mid2){
+    return mid1;
+  } else if (mid1 < mid2){
+    return FindMid(
+      arr1+len1 / 2, len1 - len1 / 2,
+      arr2, len2
+    );
+  } else {
+    return FindMid(
+      arr1, len1,
+      arr2+len2 / 2, len2 - len2 /2
+    );
+  }
+}
+\end{lstlisting}
 \section*{Problem 2}
 \begin{lstlisting}[language = C++]
 // Gradient Descent.
@@ -109,14 +143,53 @@ map<Material, double>
   }
 }
 \end{lstlisting}
+\begin{proof}
+  Suppose we don't want $x_0$ amount of $list[0]$, who have $w_0$ and value $v_0$. If we ever want to fill our package again without $list[0]$, we will need some other items $\{list[i] | i \neq 0\}$, which satisfies:
+  $$\sum_i x_i = x_0$$
+  Now let's calculate their value:
+  $$\sum_i \frac{v_i}{w_i}x_i \leq \sum_i \frac{v_0}{w_0}x_i = vpm_0\sum_i{x_i} = vpm_0x_0$$
+  So we should always take the one with largest vpm. \\
+  By Induction we can conclude that we should not only take the one with largest vpm, but the largest ones.
+\end{proof}
 \section*{Problem 4}
 \begin{lstlisting}[language = C++]
 vec<double>
-  FindSets(
-    
-  )
+  FindSets(vec<double>* X) {
+  sort_increaseing(X);
+  vec<double> ans;
+  double curr = X[i] - 2;
+  for (x = X->begin(); x++; x != X->end()){
+    if (x < curr + 1){
+      continue;
+    } else {
+      curr = x;
+      ans.push_back(x);
+    }
+  }
+  return ans;
+}
 \end{lstlisting}
 \section*{Problem 5}
+\textbf{1}
+  \[
+  \begin{matrix}
+    \textbf{20} & 9 & 5 & 5 & \textbf{9} \\
+    5 & \textbf{10} & \textbf{10} & 8 & 4 \\
+    3 & 3 & 1 & 8 & 6 \\
+    10 & \textbf{30} & 15 & \textbf{45} & 7 \\
+    6 & 10 & 20 & 30 & \textbf{40}
+  \end{matrix}
+  \]
+\textbf{2}
+  \begin{proof}
+    Consider the matrix as a finite set $M = {A_ij | 0\leq i < m, 0 \leq j < n}$. 
+    According to Zorn's lemma in set theory, considering $M$ is finite we have:
+    $$\exists m_k \in M, \forall m \in M, m_k \geq m$$
+    Then the position of this $m_k$ must be the peak and thus the peak must exists.
+  \end{proof}
 
+\textbf{3}
+  \textbf{a}
+  \textbf{b}
 
 \end{document}
