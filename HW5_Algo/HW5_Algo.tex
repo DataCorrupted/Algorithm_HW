@@ -44,6 +44,19 @@
 \begin{document}
 \maketitle
 
+\section*{Problem 5-1}
+\subsection*{(a)}
+\begin{lstlisting}[language = python]
+def MinCost( V, E, P):
+	T = MinSpanTree(V, E)
+	max_p = max(T)
+	min_c = inf;
+	for (c, p) in P:
+		if p>=max_p and c<min_c:
+			min_c = c;
+# If return value is inf, then there is no such a plan.
+return min_c
+\end{lstlisting}
 \section*{Problem 5-2}
 \subsection*{(a)}
 \begin{lstlisting}[language = python]
@@ -58,16 +71,51 @@ def bfs(V, E):
         while (v, curr) in E and (not v in H):
             if E[(curr, v)] % 1 == 1:
             # That the edge is odd, the node can't have the same value.
-                H[v] = 1 - H[curr]
-            else
                 H[v] = H[curr]
+            else
+                H[v] = 1 - H[curr]
             j += 1;
             queue[j] = v
     return H
 \end{lstlisting}
-\subsection{Problem 5-3}
+\subsection*{(b)}.\\
+\textbf{Claim 1} Such $h$ always exists for a tree.
+\begin{proof}
+	Proof by induction.\\
+	1 node tree $T_1$: $h(v) = 1$. proved.\\
+	n node tree $T_n$: suppose there is a function $h$.\\
+	n+1 node tree $T_{n+1}$: take a leaf node $v$. We can form a $h$ without $v$ since $T_{n+1}/v = T_{n}$. Then we extend $h$: \\
+		if $(v, v.parent)$ is odd, $h(v) = h(v.parent)$, else $h(v) = 1 - h(v.parent)$
+\end{proof}.\\
+\textbf{Claim 2a}: If $h(s) \neq h(t)$, any path from $s$ to $t$ contains odd numbers of even edges.\\
+\textbf{Claim 2b}: If $h(s) = h(t)$, any path from $s$ to $t$ contains even numbers of even edges.
+\begin{proof}
+	Proof by induction \\
+	Path with 1 edge. \\
+	$h(s) \neq h(t)$, the edge must be even. One(odd) even edge present. \\
+	$h(s)   =  h(t)$, the edge must be odd. No(even) even edge present. \\
+	Path with n edges. Suppose this is true.
+	Path n+1 edges. \\
+	take $t$ out and examine $t.parent$. The path from $s$ to $t.parent$ has n edges.\\
+	Claim 2a: When $h(s) \neq h(t)$: \\
+	$h(s) = h(t.parent) \neq h(t)$, Even + 1(Odd) even edges present.\\
+	$h(s) = h(t) \neq h(t.parent)$, Odd + 0(Odd) even edges present.\\
+	Claim 2b: When $h(s) = h(t)$: \\
+	$h(s) = h(t.parent) = h(t)$, Even + 0(Even) even edges present.\\
+	$h(s) = h(t) \neq h(t.parent) $, Odd + 1(Even) even edges present.
+\end{proof}
+Now let's proof that $\exists h$ when $G$ has no odd number of even weight edge.
+\begin{proof}
+	Suppose $G = (V, E) = (V, T + S)$ where $(V, T)$ is a span tree of $G$. According to claim 1 $\exists h$ for span tree $(V, T)$. All we need to do is to proof that this $h$ is valid for $G$. To be more precise, $h$ is valid $\forall s = (u, v) \in S$\\
+	Case 1: if $h(u) = h(v)$ and $s$ is odd, then $h$ is still valid. \\
+	Case 2: if $h(u) \neq h(v)$ and $s$ is even, then $h$ is still valid. \\
+	Case 3: if $h(u) = h(v)$ and $s$ is even, then a path from $u$ to $v$ already have even number of even edges, adding one more even edge $s$ will lead to a circle with odd number of even edges, which is not possible. \\
+	Case 4: if $h(u) \neq h(v)$ and $s$ is odd, then a path from $u$ to $v$ already have odd number of even edges, with $s$ being odd we have a circle with odd number of even edges, which, again, is not possible. \\
+
+\end{proof}
+\section*{Problem 5-3}
 \begin{lstlisting}[language = python]
-def bfs(s, V, E)
+def bfs(s, V , E)
     queue = s
     dist = {s: 0}
     i = 0; j = 0;
@@ -87,7 +135,11 @@ $$T(n) = O(n) = O(n^2) = O(n^3)$$
 \par \textbf{Claim} assume path $ P = \{s, \cdots, v_i, \cdots, t\}$ is the longest path in the tree, a dfs for longest path starting from $\forall v$ in the tree ends at node $v_e$. We have $v_e \in \{s, t\}$
 \begin{proof}. \\
     \textbf{Case 1}: $v \in P$, then this claim is true. 
-    \par Suppose not, $d(u, v_e) > d(u, t), d(u, v_e) > d(u, s)$, then $d(s, t)$ is not the longest path, contradicton. \\
-    \textbf{Case 2}: 
+    \par Suppose not, $d(u, v_e) > d(u, t), d(u, v_e) > d(u, s)$, then $d(s, t)$ is not the longest path, contradiction. \\
+    \textbf{Case 2}: $v \notin P$ \\
+    	Case I, from $u$ to $v_e$ there is a crossing $x \in P$ with $s$ to $t$, then we fall into Case i.
+    	Case II, $\{u \cdots v_e \}$ is disjoint with $P$, then $dis(u, v_e) > dis(u, x) + dis(x, t)$ where $x \in P$, contradiction.
+    Thus, the claim is true.
 \end{proof}
+In This case, the ending point of the first bfs must be the starting node of the longest path, all we need is another bfs.
 \end{document}
