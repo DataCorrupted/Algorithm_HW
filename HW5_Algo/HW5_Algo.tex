@@ -1,0 +1,93 @@
+ 
+\documentclass{article}
+
+\title{Algorithm Homework 5}
+\author{Rong Yuyang \\ Student ID: 69850764 \\ rongyy@shanghaitech.edu.cn}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[colorlinks,linkcolor=red]{hyperref}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{subfloat}
+\newtheorem{prop}{Proposition}
+\usepackage{ulem}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsmath}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+\begin{document}
+\maketitle
+
+\section*{Problem 5-2}
+\subsection*{(a)}
+\begin{lstlisting}[language = python]
+def bfs(V, E):
+# V: a list of all nodes. E: a dictionary of all edges.
+    queue = [V[1]];
+    H = {V[1] = 1}
+    i = 0; j = 0;
+    while i <= j:
+        curr = queue[i]; i += 1;
+        # Edge exist and not visited.
+        while (v, curr) in E and (not v in H):
+            if E[(curr, v)] % 1 == 1:
+            # That the edge is odd, the node can't have the same value.
+                H[v] = 1 - H[curr]
+            else
+                H[v] = H[curr]
+            j += 1;
+            queue[j] = v
+    return H
+\end{lstlisting}
+\subsection{Problem 5-3}
+\begin{lstlisting}[language = python]
+def bfs(s, V, E)
+    queue = s
+    dist = {s: 0}
+    i = 0; j = 0;
+    while i <= j:
+        curr = queue[i]; i += 1;
+        while (v, curr) in E and (not v in dist):
+            dist[v] = dist[curr] + E[(curr, v)]
+            j += 1; queue[j] = v;
+    reutrn (max(dist), argmax(dist))
+
+(_, s) = bfs(1, V, E)
+(ans, _) = bfs(s, V, E)
+\end{lstlisting}
+\par \textbf{Time Complexity} DFS on a graph runs on $O(|E| + |V|)$, since in this case the graph is a tree: $O(|E|) = O(|V|) = O(n)$. Thus two times dfs runs in:
+$$T(n) = O(n) = O(n^2) = O(n^3)$$
+\par \textbf{Proof of correctness} 
+\par \textbf{Claim} assume path $ P = \{s, \cdots, v_i, \cdots, t\}$ is the longest path in the tree, a dfs for longest path starting from $\forall v$ in the tree ends at node $v_e$. We have $v_e \in \{s, t\}$
+\begin{proof}. \\
+    \textbf{Case 1}: $v \in P$, then this claim is true. 
+    \par Suppose not, $d(u, v_e) > d(u, t), d(u, v_e) > d(u, s)$, then $d(s, t)$ is not the longest path, contradicton. \\
+    \textbf{Case 2}: 
+\end{proof}
+\end{document}
