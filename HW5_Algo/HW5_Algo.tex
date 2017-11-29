@@ -57,6 +57,47 @@ def MinCost( V, E, P):
 # If return value is inf, then there is no such a plan.
 return min_c
 \end{lstlisting}
+\subsection*{(b)}
+\begin{lstlisting}[language = python]
+class Plan():
+    def __init__(self, cost, power, n):
+        self.c = cost
+        self.p = power
+        # Connectivity: for a certain house i, how much house it will be connected to.(not including itself.)
+        self.connectivity = [0 for i in range(n)]
+
+class Plans():
+    def __init__(self, P):
+        self.plans = [Plan(c, p, n) for (c, p) in P]
+    def sort_by_increasing_power(self):
+        # ...
+    def sort_by_increasing_cost(self):
+        # ...
+    def binary_search_plan(self, c):
+        # ...
+        return self.plans[l]
+
+plans = Plans(P)
+plans.sort_by_increasing_power()
+E.sort_by_increasing_weight()
+S = DisjointUnionSet(n)
+
+# The following two loops are fast since plans and E are sorted.
+for plan in plans:
+    while e in E and e.weight <= plan.p:
+        # Consider it as O(1)
+        S.union(e.u, e.v)
+    # We can add extra counter to Disjoint Union Set and thus this is O(1) too.
+    plan.connectivity = S.count_each_set()
+
+plans.sort_by_increasing_cost()
+for i in range(n)
+    c_max = int(input())
+    connectivity = plans.binary_search_plan(c_max).connectivity
+    print(connectivity[i])
+
+
+\end{lstlisting}
 \section*{Problem 5-2}
 \subsection*{(a)}
 \begin{lstlisting}[language = python]
