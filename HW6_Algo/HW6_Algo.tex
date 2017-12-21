@@ -1,0 +1,76 @@
+ 
+\documentclass{article}
+
+\title{Algorithm Homework 6}
+\author{Rong Yuyang \\ Student ID: 69850764 \\ rongyy@shanghaitech.edu.cn}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[colorlinks,linkcolor=red]{hyperref}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{subfloat}
+\newtheorem{prop}{Proposition}
+\usepackage{ulem}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsmath}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+$V(i, j)$ being the greatest value when 1~i items given and j space allowed.
+$$V(i, j) = \max(V(i, j), V(i, j-w[i]) + v(i)$$
+\begin{lstlisting}[language = python]
+def bag(n, W, w, V)
+	for i in range(n):
+	for wi in range(W):
+		if i == 0:
+			V[i, wi] = 0;
+		elif wi-w[wi] >= 0:
+			V[i, wi] = max(V[i, wi], V[i, wi-w[i]] + v[i])
+\end{lstlisting}
+\section*{Problem 2}
+$S(i, j)$ being the smallest value from ith pos to jth.
+$$S(i, j) = \min(S(i, k) + S(k, j) + v(i) * v(j) * v(k))$$
+\begin{lstlisting}[language = python]
+def game(S, v, n)
+	for i in range(n):
+	for j in range(i, n):
+	for k in range(i ,j):
+		S[i, j] = min(S[i,j], S[i, k] + S[k, j] + v[i] * v[j] * v[k])
+\end{lstlisting}
+\section*{Problem 3}
+$S(i, j, k)$ being the most apples eaten when starting from i and take j steps. k denotes whether she comes back to i(k == 0) or not(k == 1)
+$$S(i, j, 0) = \max_{t, k}(S(i, j, 0), S(i, j-t, 0) + S(i, t-2, 0)$$
+$$S(i, j, 1) = \max_{t, k}(S(i, j, 1), S(i, j-t, 0) + S(k, t-1, 1), S(i, j-t, 1) + S(k, t-1, 0))$$
+\section*{Problem 4}
+\section*{Problem 5}
+
+\end{document}
