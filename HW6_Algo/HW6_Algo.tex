@@ -70,7 +70,51 @@ def game(S, v, n)
 $S(i, j, k)$ being the most apples eaten when starting from i and take j steps. k denotes whether she comes back to i(k == 0) or not(k == 1)
 $$S(i, j, 0) = \max_{t, k}(S(i, j, 0), S(i, j-t, 0) + S(i, t-2, 0)$$
 $$S(i, j, 1) = \max_{t, k}(S(i, j, 1), S(i, j-t, 0) + S(k, t-1, 1), S(i, j-t, 1) + S(k, t-1, 0))$$
+$$Ans = \max(S(0, k, 0), S(0, k, 1))$$
 \section*{Problem 4}
+\par We pre compute the level of each node. Do a tree tranversal and it should take O(n) time.
+\par Pre compute the $2^jth$ ancetor for all valid j for node i and put it in $T(i, j)$ For n node this takes O(nlgn)
+\par for each pair: if the level is not the same, find the ancetor of the lower one such that the ancetor and the other node are in the same level. Then, for two nodes in the same level, reference $T$ for largest "uncommon" ancetor. (find the common ancetor and go down a level) This works because binary works. Each pair should take O(lg n) and over all it's O(m lg n)
+\par Overall it's O((m+n)log n)
 \section*{Problem 5}
+\subsection*{a}
+\begin{lstlisting}[language = python]
+def clac(n, a)
+	def F(i, j, w):
+		global f
+		if f(i, j) != -1:
+			return f[i, j]
+		else:
+			minima = 0xffff
+			for k in range(i, j):
+				if minima < F(i, k-1) + F(k, j) + w[i, j]
+					minima = F(i, k-1) + F(k, j) + w[i, j]
+			return minima
+
+	for i in range(n):
+		for j in range(n):
+			for k in range(i, j):
+				w[i, j] += a[k]
+	return F(1, n, w)
+\end{lstlisting}
+The time complexity is $O(n^3)$
+\subsection*{b}
+$$w(a, d) = w(a, b-1) + w(b, c) + w(c+1, d) \geq w(b,c)$$
+\begin{equation}\begin{aligned}
+	&   w(a, c) + w(b, d) \\
+	& = a_a + w(a+1, b) + w(b+1, c) + a_b + w(b+1, c) + w(c+1, d) \\
+	& = a_a + w(a+1, d) + a_b + w(b+1, c) \\
+	& = w(a, d) + w(b, c) 
+\end{aligned}\end{equation}
+\subsection*{c}
+\begin{equation}\begin{aligned}
+	&   f(a, c) + f(b, d) \\
+	& \leq f(a, t) + f(t+1, c) + f(b, k) + f(k+1, d) + w(b, d) \\
+	& \leq f(a, t) + f(t+1, d) + w(a, d) + f(b, k) + f(k+1, c) + w(b, c) \\
+	& = f(a, d) + f(b, c) 
+\end{aligned}\end{equation}
+\subsection*{d}
+\subsection*{e}
+
 
 \end{document}
